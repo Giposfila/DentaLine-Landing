@@ -32,3 +32,15 @@ git push -u origin main
 ```
 
 Зависимости, сборки, локальные настройки, секреты и служебные папки ИИ исключены через `.gitignore`. Для запуска после клонирования: `npm ci`, затем `npm run dev`.
+
+## GitHub Pages
+
+Сайт публикуется по адресу https://giposfila.github.io/DentaLine-Landing/.
+
+1. В настройках репозитория откройте **Settings → Pages → Build and deployment → Source** и выберите **GitHub Actions** вместо **Deploy from a branch**.
+2. Отправьте изменения с `.github/workflows/deploy.yml` в ветку `main`.
+3. Дождитесь успешного workflow **Deploy to GitHub Pages** на вкладке **Actions**. Для повторного запуска используйте **Run workflow**.
+
+Workflow использует Node.js 24, выполняет `npm ci` и `npm run build`, затем публикует только `dist/`. Публикация исходников из корня ветки без сборки не работает: браузер не собирает модули Vite.
+
+В production настроен базовый путь `/DentaLine-Landing/`; локальный `npm run dev` работает от `/`. Проверка production-сборки: `npm run build`, затем `npm run preview` и открытие `http://localhost:4173/DentaLine-Landing/`. Для своего домена или другого имени репозитория измените `base` в конфигурации Vite.
